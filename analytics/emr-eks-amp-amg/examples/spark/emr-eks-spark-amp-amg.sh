@@ -44,16 +44,16 @@ CW_LOG_GROUP="/emr-on-eks-logs/${EMR_VIRTUAL_CLUSTER_NAME}/${EMR_VIRTUAL_CLUSTER
 #--------------------------------------------
 # Download sample input data from https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 #--------------------------------------------
-Create folder locally to store the input data
+# Create folder locally to store the input data
 mkdir -p "spark-scripts/input"
 
 # Download the input data from public data set to local folders
-max=40
+max=10
 for (( i=1; i <= $max; ++i ))
 do
-    wget https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2022-01.parquet -O "spark-scripts/input/yellow_tripdata_2022-${i}.parquet"
+  aws s3 cp 's3://nyc-tlc/trip data/yellow_tripdata_2022-01.parquet'  "${SPARK_JOB_S3_PATH}/spark-scripts/input/yellow_tripdata_2022-${i}.parquet"; 
 done
-
+rm -rf "spark-scripts/input"
 #--------------------------------------------
 # This command copies PySpark script and the Pod templates to S3 bucket
 #--------------------------------------------
