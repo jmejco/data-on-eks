@@ -1,20 +1,18 @@
 import { Construct } from 'constructs';
 import * as blueprints from '@aws-quickstart/eks-blueprints'
 import { GenericClusterProvider, GlobalResources, PlatformTeam, VpcProvider } from '@aws-quickstart/eks-blueprints';
-import { CapacityType, Cluster, ClusterLoggingTypes, KubernetesVersion, NodegroupAmiType } from 'aws-cdk-lib/aws-eks';
-import { InstanceType, IVpc, Vpc } from 'aws-cdk-lib/aws-ec2';
-import { PolicyStatement } from 'aws-cdk-lib/aws-iam';
+import { CapacityType, ClusterLoggingTypes, KubernetesVersion, NodegroupAmiType } from 'aws-cdk-lib/aws-eks';
+import { InstanceType, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { EmrEksTeam, EmrEksTeamProps } from './teams/emrEksTeam';
 import { EmrEksAddOn } from './AddOns/emrEksAddOn';
 import { StackProps } from 'aws-cdk-lib';
 
 export interface EmrEksBlueprintProps extends StackProps {
   eksCluster?: GenericClusterProvider,
-  clusterVpc?: IVpc,
+  clusterVpc?: string,
   dataTeams: EmrEksTeamProps [],
   eksClusterName?: string,
 }
-
 
 export default class EmrEksStack {
 
@@ -54,20 +52,19 @@ export default class EmrEksStack {
 
     const clusterAdminTeam = new PlatformTeam({
       name: "adminteam",
-      userRoleArn: "arn:aws:iam::372775283473:role/FULL"
     });
 
     let emrEksBlueprint = blueprints.EksBlueprint.builder();
 
     if (props.clusterVpc) {
-      emrEksBlueprint.resourceProvider(GlobalResources.Vpc, new VpcProvider(props.clusterVpc.vpcId));
+      emrEksBlueprint.resourceProvider(GlobalResources.Vpc, new VpcProvider(props.clusterVpc));
     }
 
-    let emrTeams: EmrEksTeam [];
+    let emrTeams: EmrEksTeam [] = [...props.dataTeams.map(team => new EmrEksTeam(team))];
 
-    props.dataTeams.forEach(dataTeam => {
-      emrTeams.push(new EmrEksTeam(dataTeam) )
-    });
+    // props.dataTeams.forEach(dataTeam => {
+    //   emrTeams.push(new EmrEksTeam(dataTeam) )
+    // });
 
     emrEksBlueprint = props.eksCluster ?
       emrEksBlueprint.clusterProvider(props.eksCluster) :

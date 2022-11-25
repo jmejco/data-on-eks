@@ -1,12 +1,62 @@
 {
-  "availability-zones:account=214783019211:region=eu-west-1": [
+  "availability-zones:account=314704651063:region=eu-west-1": [
     "eu-west-1a",
     "eu-west-1b",
     "eu-west-1c"
   ],
-  "availability-zones:account=372775283473:region=eu-west-1": [
-    "eu-west-1a",
-    "eu-west-1b",
-    "eu-west-1c"
-  ]
+  "vpc-provider:account=314704651063:filter.vpc-id=vpc-068459402d2e42fe0:region=eu-west-1:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-068459402d2e42fe0",
+    "vpcCidrBlock": "10.1.0.0/16",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "Private",
+        "type": "Private",
+        "subnets": [
+          {
+            "subnetId": "subnet-077432d39b4cd5a6f",
+            "cidr": "10.1.10.0/24",
+            "availabilityZone": "eu-west-1a",
+            "routeTableId": "rtb-0403acbf3e13e0b93"
+          },
+          {
+            "subnetId": "subnet-0e688752b26b764cf",
+            "cidr": "10.1.11.0/24",
+            "availabilityZone": "eu-west-1b",
+            "routeTableId": "rtb-0403acbf3e13e0b93"
+          },
+          {
+            "subnetId": "subnet-05b8beccb12c814ec",
+            "cidr": "10.1.12.0/24",
+            "availabilityZone": "eu-west-1c",
+            "routeTableId": "rtb-0403acbf3e13e0b93"
+          }
+        ]
+      },
+      {
+        "name": "Public",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-0e024b1e61b3002bd",
+            "cidr": "10.1.0.0/24",
+            "availabilityZone": "eu-west-1a",
+            "routeTableId": "rtb-002ebd472454f87fb"
+          },
+          {
+            "subnetId": "subnet-0b9716c769508b96a",
+            "cidr": "10.1.1.0/24",
+            "availabilityZone": "eu-west-1b",
+            "routeTableId": "rtb-002ebd472454f87fb"
+          },
+          {
+            "subnetId": "subnet-0e8bb4132fff8ab92",
+            "cidr": "10.1.2.0/24",
+            "availabilityZone": "eu-west-1c",
+            "routeTableId": "rtb-002ebd472454f87fb"
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -75,7 +75,7 @@ export class EmrEksTeam extends ApplicationTeam {
   private setEmrContainersForNamespace(cluster: Cluster, namespace: string, createNamespace: boolean): KubernetesManifest {
 
     let emrContainersK8sRole = readYamlDocument(`${__dirname}/emrContainersRole.yaml`);
-    emrContainersK8sRole = emrContainersK8sRole.replace('<REPLACE-NAMESPACE>', namespace);
+    emrContainersK8sRole = emrContainersK8sRole.replace('emr-eks-cdk-test', namespace);
     const emrContainersK8sRoleManifest = loadYaml(emrContainersK8sRole);
 
     const emrContainersK8sRoleResource = cluster.addManifest('emrContainersK8sRoleManifest',
@@ -83,7 +83,7 @@ export class EmrEksTeam extends ApplicationTeam {
     );
 
     let emrContainersK8sRoleBinding = readYamlDocument(`${__dirname}/emrContainersRoleBinding.yaml`);
-    emrContainersK8sRoleBinding = emrContainersK8sRoleBinding.replace('<REPLACE-NAMESPACE>', namespace);
+    emrContainersK8sRoleBinding = emrContainersK8sRoleBinding.replace('emr-eks-cdk-test', namespace);
     const emrContainersK8sRoleBindingManifest = loadYaml(emrContainersK8sRoleBinding);
 
     const emrContainersK8sRoleBindingResource = cluster.addManifest('emrContainersK8sRoleBindingManifest',
